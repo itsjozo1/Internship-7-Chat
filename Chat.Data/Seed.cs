@@ -2,6 +2,7 @@ using Bogus;
 using Chat.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Chat.Data
@@ -66,14 +67,23 @@ namespace Chat.Data
                     return null;
                 })
                 .Where(gm => gm != null)
-                .Take(150) // Take exactly 150 messages
                 .ToList();
 
             int remainingMessagesCount = 150 - groupMessages.Count;
 
             if (remainingMessagesCount > 0)
             {
-                var additionalMessages = groupMessageFaker.Generate(remainingMessagesCount);
+                // Generate additional unique messages for remaining count
+                var additionalMessages = new List<GroupMessage>();
+                for (int i = 0; i < remainingMessagesCount; i++)
+                {
+                    var message = groupMessageFaker
+                        .RuleFor(gm => gm.GroupId, f => f.Random.Number(1, 10))
+                        .RuleFor(gm => gm.UserId, f => f.Random.Number(1, 20))
+                        .Generate();
+                    additionalMessages.Add(message);
+                }
+
                 groupMessages.AddRange(additionalMessages);
             }
 
