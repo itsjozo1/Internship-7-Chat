@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Chat.Data.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    [Migration("20231230143807_Initial")]
+    [Migration("20231230174839_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -27,28 +27,28 @@ namespace Chat.Data.Migrations
 
             modelBuilder.Entity("Chat.Data.Entities.Group", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GroupId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GroupId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("GroupId");
 
                     b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("Chat.Data.Entities.GroupMessage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GroupMessageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GroupMessageId"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -63,7 +63,7 @@ namespace Chat.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("GroupMessageId");
 
                     b.HasIndex("GroupId");
 
@@ -80,6 +80,9 @@ namespace Chat.Data.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("boolean");
+
                     b.HasKey("UserId", "GroupId");
 
                     b.HasIndex("GroupId");
@@ -89,11 +92,11 @@ namespace Chat.Data.Migrations
 
             modelBuilder.Entity("Chat.Data.Entities.PrivateMessage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PrivateMessageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PrivateMessageId"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -108,7 +111,7 @@ namespace Chat.Data.Migrations
                     b.Property<int>("SentUserId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("PrivateMessageId");
 
                     b.HasIndex("RecievedUserId");
 
@@ -119,24 +122,24 @@ namespace Chat.Data.Migrations
 
             modelBuilder.Entity("Chat.Data.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

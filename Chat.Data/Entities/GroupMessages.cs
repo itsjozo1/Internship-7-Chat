@@ -2,7 +2,7 @@ namespace Chat.Data.Entities;
 
 public class GroupMessage
 {
-    public int Id { get; set; }
+    public int GroupMessageId { get; set; }
     public DateTime SentTime { get; set; }
     public string Content { get; set; }
     

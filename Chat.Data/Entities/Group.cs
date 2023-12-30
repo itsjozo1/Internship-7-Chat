@@ -2,12 +2,7 @@ namespace Chat.Data.Entities;
 
 public class Group
 {
-    public Group(string name)
-    {
-        Name = name;
-    }
-    
-    public int Id { get; set; }
+    public int GroupId { get; set; }
     public string Name { get; set; }
     
     public ICollection<GroupUser> GroupUsers { get; set; } = new List<GroupUser>();

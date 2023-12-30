@@ -2,7 +2,7 @@ namespace Chat.Data.Entities;
 
 public class PrivateMessage
 {
-        public int Id { get; set; }
+        public int PrivateMessageId { get; set; }
         public DateTime SentTime { get; set; }
         public string Content { get; set; }
     

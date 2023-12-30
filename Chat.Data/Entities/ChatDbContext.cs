@@ -21,8 +21,11 @@ public class ChatDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email).IsUnique();
+        
         modelBuilder.Entity<GroupUser>()
-            .HasKey(gu => new { gu.UserId, gu.GroupId });
+            .HasKey(gu => gu.GroupUserId);
 
         modelBuilder.Entity<GroupUser>()
             .HasOne(g => g.User)
@@ -35,7 +38,7 @@ public class ChatDbContext : DbContext
             .HasForeignKey(gu => gu.GroupId);
 
         modelBuilder.Entity<GroupMessage>()
-            .HasKey(gm => gm.Id);
+            .HasKey(gm => gm.GroupMessageId);
 
         modelBuilder.Entity<GroupMessage>()
             .HasOne(u => u.User)
@@ -48,7 +51,7 @@ public class ChatDbContext : DbContext
             .HasForeignKey(gm => gm.GroupId);
 
         modelBuilder.Entity<PrivateMessage>()
-            .HasKey(pm => pm.Id);
+            .HasKey(pm => pm.PrivateMessageId);
 
         modelBuilder.Entity<PrivateMessage>()
             .HasOne(su => su.SentUser)
@@ -60,6 +63,8 @@ public class ChatDbContext : DbContext
             .WithMany(pm => pm.ReceivedMessages)
             .HasForeignKey(pm => pm.RecievedUserId);
 
+        Seed.SeedData(modelBuilder);
+        
         base.OnModelCreating(modelBuilder);
     }
 
