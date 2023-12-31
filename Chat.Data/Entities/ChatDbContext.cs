@@ -1,11 +1,8 @@
-using Chat.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
 
-
-namespace Chat.Data;
+namespace Chat.Data.Entities;
 
 public class ChatDbContext : DbContext
 {
