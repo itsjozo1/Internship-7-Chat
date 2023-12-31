@@ -27,4 +27,6 @@ public class PrivateMessageRepository : Base
 
         return SaveChanges();
     }
+
+    public ICollection<PrivateMessage> GetAll() => DbContext.PrivateMessages.ToList();
 }

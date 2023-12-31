@@ -27,4 +27,6 @@ public class GroupMessagesrepository : Base
 
         return SaveChanges();
     }
+
+    public ICollection<GroupMessage> GetAll() => DbContext.GroupMessages.ToList();
 }
