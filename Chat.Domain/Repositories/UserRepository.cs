@@ -1,5 +1,4 @@
-using System.Collections;
-using Microsoft.EntityFrameworkCore;
+
 using Chat.Data.Entities;
 
 namespace Chat.Domain.Repositories;
@@ -45,6 +44,8 @@ public class UserRepository : Base
     }
 
     public User? GetById(int id) => DbContext.Users.FirstOrDefault(u => u.UserId == id);
+    public User? GetByEmail(string email) => DbContext.Users.FirstOrDefault(u => u.Email == email);
+
     public ICollection<User> GetAll() => DbContext.Users.ToList();
 
     /*public ICollection<UserWithGroups> GetByGroupId(int groupId)
@@ -66,5 +67,5 @@ public class UserRepository : Base
 
         return users;
     }*/
-
+    
 }

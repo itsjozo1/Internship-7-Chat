@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace Chat
+namespace Chat.Menus
 {
     public class Menu
     {
-        public Menu(List<string> optionsList)
+        public static void Create()
         {
-            OptionsList = optionsList;
+            
         }
 
-        public List<string> OptionsList { get; set; }
-
-        public int DisplayMenus()
+        public void DisplayMenus(Dictionary<string, Action> optionsList)
         {
             ConsoleKeyInfo key;
             int selectedOption = 0;
@@ -22,9 +20,10 @@ namespace Chat
                 Console.Clear();
                 Console.WriteLine("Select an option:");
 
-                for (int i = 0; i < OptionsList.Count; i++)
+                int optionIndex = 0;
+                foreach (var option in optionsList.Keys)
                 {
-                    if (i == selectedOption)
+                    if (optionIndex == selectedOption)
                     {
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
@@ -35,34 +34,34 @@ namespace Chat
                         Console.Write(" ");
                     }
 
-                    Console.WriteLine(OptionsList[i]);
+                    Console.WriteLine(option);
                     Console.ResetColor();
+                    optionIndex++;
                 }
 
                 key = Console.ReadKey(true);
 
                 switch (key.Key)
                 {
-                    case ConsoleKey.W:
-                        selectedOption = (selectedOption == 0) ? OptionsList.Count - 1 : selectedOption - 1;
+                    case ConsoleKey.UpArrow:
+                        selectedOption = (selectedOption == 0) ? optionsList.Count - 1 : selectedOption - 1;
                         break;
-                    case ConsoleKey.S:
-                        selectedOption = (selectedOption == OptionsList.Count - 1) ? 0 : selectedOption + 1;
+                    case ConsoleKey.DownArrow:
+                        selectedOption = (selectedOption == optionsList.Count - 1) ? 0 : selectedOption + 1;
                         break;
                     case ConsoleKey.Enter:
-                        if (selectedOption != OptionsList.Count - 1)
+                        if (selectedOption != optionsList.Count - 1)
                         {
-                            return selectedOption + 1;
+                            string selectedAction = optionsList.Keys.ToArray()[selectedOption];
+                            optionsList[selectedAction].Invoke();
                         }
                         else
                         {
                             Console.WriteLine("Exiting...");
-                            return selectedOption = 0;
                         }
+                        break;
                 }
-            } while (key.Key != ConsoleKey.Enter || selectedOption != OptionsList.Count - 1);
-
-            return selectedOption;
+            } while (key.Key != ConsoleKey.Enter || selectedOption != optionsList.Count - 1);
         }
     }
 }
