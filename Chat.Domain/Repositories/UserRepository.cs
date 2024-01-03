@@ -67,5 +67,21 @@ public class UserRepository : Base
 
         return users;
     }*/
-    
+    public string TrimUsernameBeforeAtSign(int userId)
+    {
+        var user = DbContext.Users.FirstOrDefault(u => u.UserId == userId);
+        if (user == null)
+        {
+            throw new InvalidOperationException("Korisnik nepostoji");
+        }
+
+        int atIndex = user.Email.IndexOf('@');
+        if (atIndex != -1)
+        {
+            string trimmedUsername = user.Email.Substring(0, atIndex);
+            return trimmedUsername;
+        }
+
+        throw new InvalidOperationException("Netočan email format");
+    }
 }

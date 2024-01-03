@@ -28,5 +28,10 @@ public class GroupMessagesrepository : Base
         return SaveChanges();
     }
 
-    public ICollection<GroupMessage> GetAll() => DbContext.GroupMessages.ToList();
+    public List<GroupMessage> GetAll() => DbContext.GroupMessages.ToList();
+    
+    public List<GroupMessage> GetAllSortedBySentTime()
+    {
+        return DbContext.GroupMessages.OrderBy(message => message.SentTime).ToList();
+    }
 }

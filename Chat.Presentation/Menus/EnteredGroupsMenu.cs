@@ -26,7 +26,7 @@ namespace Chat.Menus
             {
                 if (group != null)
                 {
-                    enterChat.Add(group.Name, () => ChatAction.Create());
+                    enterChat.Add(group.Name, () => ChatAction.Create(user, group));
                 }
             }
 
