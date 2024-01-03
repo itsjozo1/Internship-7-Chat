@@ -1,22 +1,28 @@
+using Chat.Actions;
+using Chat.Data.Entities;
+
 namespace Chat.Menus;
 
 public class MainMenu : Menu
 {
-    public static void Create()
+    public static void Create(User user)
     {
-        while (true)
+        bool continueLoop = true;
+        while (continueLoop)
         {
-            if (AutentificationMenu.Create() is null) return;
-            
             Dictionary<string, Action?> optionsList = new Dictionary<string, Action?>()
             {
-                { "Grupni kanali", () => MainMenu.Create() },
-                { "Privatne poruke", () => MainMenu.Create() },
-                { "Postavke profila", () => MainMenu.Create() },
-                { "Odjava", null },
+                { "Grupni kanali", () => GroupMenu.Create(user) },
+                { "Privatne poruke", () => GroupMenu.Create(user) },
+                { "Postavke profila", () => GroupMenu.Create(user) }
             };
-
-            new MainMenu().DisplayMenus(optionsList);
+            
+            if (user.IsAdmin)
+            {   
+                optionsList.Add("User managment", null);
+            }
+            optionsList.Add("Odjava", () => { continueLoop = false;});
+            DisplayMenus(optionsList);
         }
     }
     

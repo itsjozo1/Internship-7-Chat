@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Chat.Menus
 {
     public class Menu
     {
-
-        public void DisplayMenus(Dictionary<string, Action?> optionsList)
+        protected static void DisplayMenus(Dictionary<string, Action> optionsList)
         {
             ConsoleKeyInfo key;
             int selectedOption = 0;
@@ -46,19 +46,12 @@ namespace Chat.Menus
                         selectedOption = (selectedOption == optionsList.Count - 1) ? 0 : selectedOption + 1;
                         break;
                     case ConsoleKey.Enter:
-                        if (selectedOption != optionsList.Count - 1)
-                        {
-                            string selectedAction = optionsList.Keys.ToArray()[selectedOption];
-                            optionsList[selectedAction].Invoke();
-                            selectedOption = optionsList.Count - 1;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Exiting...");
-                        }
-                        break;
+                        string selectedAction = optionsList.Keys.ToArray()[selectedOption];
+                        optionsList[selectedAction]?.Invoke();
+                        return;
                 }
-            } while (key.Key != ConsoleKey.Enter || selectedOption != optionsList.Count - 1);
+            } while (key.Key != ConsoleKey.Enter);
+            
         }
     }
 }

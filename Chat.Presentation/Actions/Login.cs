@@ -1,9 +1,9 @@
-using System;
-using System.Threading;
 using Chat.Data.Entities;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
+
+namespace Chat.Actions;
 
 public class Login
 {

@@ -28,4 +28,10 @@ public class GroupUserRepository : Base
 
         return SaveChanges();
     }
+    public List<GroupUser> GetAllGroupUsersByUserId(int userId)
+    {
+        return DbContext.GroupUsers
+            .Where(gu => gu.UserId == userId)
+            .ToList();
+    }
 }

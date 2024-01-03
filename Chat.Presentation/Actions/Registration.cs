@@ -6,7 +6,7 @@ using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
 
-namespace Chat.Processes;
+namespace Chat.Actions;
 
 public class Registration
 {

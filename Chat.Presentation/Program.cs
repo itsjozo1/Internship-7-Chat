@@ -10,6 +10,6 @@ using Microsoft.Extensions.Configuration;
 
 UserRepository users = RepositoryFactory.Create<UserRepository>(ConfigHelper.GetConfig());
 
-MainMenu.Create();
+AutentificationMenu.Create();
 
 
