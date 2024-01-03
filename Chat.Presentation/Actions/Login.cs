@@ -23,7 +23,7 @@ public class Login
             {
                 TimeSpan remainingTime = cooldownEndTime - DateTime.Now;
                 int roundedRemainingSeconds = (int)Math.Round(remainingTime.TotalSeconds);
-                Console.WriteLine($"Too many failed attempts. Please try again after {roundedRemainingSeconds} seconds.");
+                Console.WriteLine($"Previše pokušaja, pokušajte ponovno za {roundedRemainingSeconds} sekundi.");
                 Thread.Sleep(1000);
 
                 if (DateTime.Now >= cooldownEndTime)
@@ -33,16 +33,16 @@ public class Login
                 Console.Clear();
             }
 
-            Console.WriteLine("Enter your email: ");
+            Console.WriteLine("Unesite svoj email: ");
             var email = Console.ReadLine();
-            Console.WriteLine("Enter your password: ");
+            Console.WriteLine("Unesite lozinku: ");
             var password = Console.ReadLine();
 
             var user = users.GetByEmail(email);
 
             if (user != null && user.Password == password)
             {
-                Console.WriteLine("Login successful!");
+                Console.WriteLine("Uspiješna prijava!");
                 return user;
             }
 
@@ -56,7 +56,7 @@ public class Login
             }
 
             Console.Clear();
-            Console.WriteLine("Incorrect email or password. Please try again.");
+            Console.WriteLine("Netočan email ili lozinka, pokušajte ponovno: .");
         }
     }
 }

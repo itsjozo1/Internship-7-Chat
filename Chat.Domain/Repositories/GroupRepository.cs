@@ -44,8 +44,10 @@ public class GroupRepository : Base
     }
 
     public Group? GetById(int id) => DbContext.Groups.FirstOrDefault(g => g.GroupId == id);
-    
-    public ICollection<Group> GetAll() => DbContext.Groups.ToList();
+
+    public Group? GetByName(string name) => DbContext.Groups.FirstOrDefault(g => g.Name == name);
+
+    public List<Group> GetAll() => DbContext.Groups.ToList();
 
     /*public GroupDetails? GetDetailedById(int groupId)
     {

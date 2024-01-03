@@ -12,8 +12,8 @@ public class GroupMenu : Menu
         {
             Dictionary<string, Action?> groupOptionsList = new Dictionary<string, Action?>()
             {
-                { "Kreiranje novog kanala", () => AddGroup.Create() },
-                { "Ulazak u kanal", () => EnterGroup.Create()},
+                { "Kreiranje novog kanala", () => AddGroup.Create(user) },
+                { "Ulazak u kanal", () => EnterGroupMenu.Create(user)},
                 { "Ispis mojih kanala", () => EnteredGroupsMenu.Create(user)},
                 { "Povratak", () => { continueLoop = false;}}
             };
