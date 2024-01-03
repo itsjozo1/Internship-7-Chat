@@ -5,12 +5,8 @@ namespace Chat.Menus
 {
     public class Menu
     {
-        public static void Create()
-        {
-            
-        }
 
-        public void DisplayMenus(Dictionary<string, Action> optionsList)
+        public void DisplayMenus(Dictionary<string, Action?> optionsList)
         {
             ConsoleKeyInfo key;
             int selectedOption = 0;
@@ -54,6 +50,7 @@ namespace Chat.Menus
                         {
                             string selectedAction = optionsList.Keys.ToArray()[selectedOption];
                             optionsList[selectedAction].Invoke();
+                            selectedOption = optionsList.Count - 1;
                         }
                         else
                         {

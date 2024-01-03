@@ -1,7 +1,6 @@
 using Bogus;
 using Chat.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +25,7 @@ namespace Chat.Data
             var userFaker = new Faker<User>()
                 .RuleFor(u => u.UserId, f => userId++)
                 .RuleFor(u => u.Email, f => f.Internet.Email())
+                .RuleFor(u => u.IsAdmin, f => f.Random.Bool())
                 .RuleFor(u => u.Password, f => f.Internet.Password());
 
             modelBuilder.Entity<User>().HasData(userFaker.Generate(20));
@@ -33,8 +33,7 @@ namespace Chat.Data
             var groupUserFaker = new Faker<GroupUser>()
                 .RuleFor(gu => gu.GroupUserId, f => groupUserId++)
                 .RuleFor(gu => gu.GroupId, f => f.Random.Number(1, 10))
-                .RuleFor(gu => gu.UserId, f => f.Random.Number(1, 20))
-                .RuleFor(gu => gu.IsAdmin, f => f.Random.Bool());
+                .RuleFor(gu => gu.UserId, f => f.Random.Number(1, 20));
 
             var groupUsers = groupUserFaker.Generate(60)
                 .DistinctBy(gu => new { gu.UserId, gu.GroupId })
@@ -47,47 +46,19 @@ namespace Chat.Data
                 .RuleFor(gm => gm.SentTime, f => f.Date.Recent().ToUniversalTime())
                 .RuleFor(gm => gm.Content, f => f.Lorem.Sentence());
 
-            // Generate group messages for users in valid groups
-            var groupMessages = groupUsers
-                .Select(gu => new { gu.UserId, gu.GroupId })
-                .Select(gu =>
-                {
-                    var groupIdForUser = gu.GroupId;
-                    var userIdInGroup = gu.UserId;
-
-                    var existingGroupIds = groupUsers.Select(g => g.GroupId).Distinct().ToList();
-
-                    if (existingGroupIds.Contains(groupIdForUser)) // Check if the group exists
-                    {
-                        return groupMessageFaker
-                            .RuleFor(gm => gm.GroupId, f => groupIdForUser)
-                            .RuleFor(gm => gm.UserId, f => userIdInGroup)
-                            .Generate();
-                    }
-                    return null;
-                })
-                .Where(gm => gm != null)
-                .ToList();
-
-            int remainingMessagesCount = 150 - groupMessages.Count;
-
-            if (remainingMessagesCount > 0)
+            var groupMessages = Enumerable.Range(0, 150).Select(_ =>
             {
-                // Generate additional unique messages for remaining count
-                var additionalMessages = new List<GroupMessage>();
-                for (int i = 0; i < remainingMessagesCount; i++)
-                {
-                    var message = groupMessageFaker
-                        .RuleFor(gm => gm.GroupId, f => f.Random.Number(1, 10))
-                        .RuleFor(gm => gm.UserId, f => f.Random.Number(1, 20))
-                        .Generate();
-                    additionalMessages.Add(message);
-                }
-
-                groupMessages.AddRange(additionalMessages);
-            }
+                var randomGroupUserIndex = new Faker().Random.Int(0, groupUsers.Count - 1);
+                var randomGroupUser = groupUsers[randomGroupUserIndex];
+                var userGroup = GetUserAndGroupId(randomGroupUser.GroupUserId, groupUsers);
+                return groupMessageFaker
+                    .RuleFor(gm => gm.GroupId, f => userGroup.GroupId)
+                    .RuleFor(gm => gm.UserId, f => userGroup.UserId)
+                    .Generate();
+            }).ToList();
 
             modelBuilder.Entity<GroupMessage>().HasData(groupMessages);
+
 
             var privateMessageFaker = new Faker<PrivateMessage>()
                 .RuleFor(pm => pm.PrivateMessageId, f => privateMessageId++)
@@ -97,6 +68,16 @@ namespace Chat.Data
                 .RuleFor(pm => pm.RecievedUserId, f => f.Random.Number(1, 20));
 
             modelBuilder.Entity<PrivateMessage>().HasData(privateMessageFaker.Generate(100));
+        }
+
+        static (int UserId, int GroupId) GetUserAndGroupId(int groupUserId, List<GroupUser> groupUsers)
+        {
+            var userGroup = groupUsers.FirstOrDefault(gu => gu.GroupUserId == groupUserId);
+            if (userGroup != null)
+            {
+                return (userGroup.UserId, userGroup.GroupId);
+            }
+            return (0, 0);
         }
     }
 }

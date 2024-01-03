@@ -31,6 +31,7 @@ namespace Chat.Data.Migrations
                 {
                     UserId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IsAdmin = table.Column<bool>(type: "boolean", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false)
                 },
@@ -71,13 +72,14 @@ namespace Chat.Data.Migrations
                 name: "GroupUsers",
                 columns: table => new
                 {
+                    GroupUserId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     GroupId = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    IsAdmin = table.Column<bool>(type: "boolean", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupUsers", x => new { x.UserId, x.GroupId });
+                    table.PrimaryKey("PK_GroupUsers", x => x.GroupUserId);
                     table.ForeignKey(
                         name: "FK_GroupUsers_Groups_GroupId",
                         column: x => x.GroupId,
@@ -134,6 +136,11 @@ namespace Chat.Data.Migrations
                 name: "IX_GroupUsers_GroupId",
                 table: "GroupUsers",
                 column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupUsers_UserId",
+                table: "GroupUsers",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrivateMessages_RecievedUserId",

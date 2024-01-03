@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Chat.Data.Entities;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
@@ -9,7 +10,7 @@ public class Login
     private const int MaxAttempts = 3;
     private const int CooldownTimeSeconds = 30;
 
-    public static void Create()
+    public static User? Create()
     {
         UserRepository users = RepositoryFactory.Create<UserRepository>(ConfigHelper.GetConfig());
         int attempts = 0;
@@ -42,7 +43,7 @@ public class Login
             if (user != null && user.Password == password)
             {
                 Console.WriteLine("Login successful!");
-                break;
+                return user;
             }
 
             attempts++;

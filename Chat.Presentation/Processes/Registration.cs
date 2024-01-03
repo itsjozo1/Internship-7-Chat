@@ -10,7 +10,7 @@ namespace Chat.Processes;
 
 public class Registration
 {
-    public static void Create()
+    public static User? Create()
     {
         UserRepository users = RepositoryFactory.Create<UserRepository>(ConfigHelper.GetConfig());
         
@@ -23,8 +23,11 @@ public class Registration
         
         if (users.Add(new User(email, password)) == ResponseResultType.Success)
         {
-            Console.WriteLine("Successfully registered.");
+            Console.WriteLine("Uspješno ste registrirani.");
+            return new User(email, password);
         }
+
+        return null;
     }
 
     static string GetUserEmail(UserRepository users)
@@ -41,7 +44,7 @@ public class Registration
             }
             else if (users.GetByEmail(email) != null)
             {
-                Console.WriteLine("Korisnik sa uneseninm emailom već postoju, unesite ponovno: .");
+                Console.WriteLine("Korisnik sa uneseninm emailom već postoji, unesite ponovno: .");
             }
         } while (!IsValidEmail(email) || users.GetByEmail(email) != null);
 

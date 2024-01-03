@@ -9,15 +9,17 @@ namespace Chat.Menus;
 
 public class AutentificationMenu : Menu
 {
-    public new static void Create()
+    public  static User? Create()
     {
-        Dictionary<string, Action> optionsList = new Dictionary<string, Action>()
+        User? user = null;
+        Dictionary<string, Action?> optionsList = new Dictionary<string, Action?>()
         {
-            {"Registracija", () => Registration.Create()},
-            {"Prijava", () => Login.Create()},
-            {"Izlaz", () => MainMenu.Create()},
+            {"Registracija", () => user = Registration.Create()},
+            {"Prijava", () => user = Login.Create()},
+            {"Izlaz", null},
         };
         new Menu().DisplayMenus(optionsList);
+        return user;
     }
 
 }
