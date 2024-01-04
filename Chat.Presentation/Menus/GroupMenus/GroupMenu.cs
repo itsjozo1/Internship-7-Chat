@@ -1,7 +1,7 @@
 using Chat.Actions;
 using Chat.Data.Entities;
 
-namespace Chat.Menus;
+namespace Chat.Menus.GroupMenus;
 
 public class GroupMenu : Menu
 {

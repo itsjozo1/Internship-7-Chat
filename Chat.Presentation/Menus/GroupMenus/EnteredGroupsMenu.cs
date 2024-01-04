@@ -3,11 +3,8 @@ using Chat.Data.Entities;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Chat.Menus
+namespace Chat.Menus.GroupMenus
 {
     public class EnteredGroupsMenu : Menu
     {

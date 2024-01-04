@@ -39,6 +39,7 @@ public class UserRepository : Base
 
         userToUpdate.Email = user.Email;
         userToUpdate.Password = user.Password;
+        userToUpdate.IsAdmin = user.IsAdmin;
 
         return SaveChanges();
     }

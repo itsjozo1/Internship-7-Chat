@@ -34,4 +34,24 @@ public class GroupUserRepository : Base
             .Where(gu => gu.UserId == userId)
             .ToList();
     }
+    public int CountUsersInGroup(int groupId)
+    {
+        return DbContext.GroupUsers
+            .Count(gu => gu.GroupId == groupId);
+    }
+    public ResponseResultType DeleteByUserId(int userId)
+    {
+        var groupUserToDelete = DbContext.GroupUsers
+            .FirstOrDefault(gu => gu.UserId == userId);
+
+        if (groupUserToDelete == null)
+        {
+            return ResponseResultType.NotFound;
+        }
+
+        DbContext.GroupUsers.Remove(groupUserToDelete);
+        DbContext.SaveChanges();
+
+        return ResponseResultType.Success;
+    }
 }

@@ -1,7 +1,6 @@
-using Chat.Actions;
 using Chat.Data.Entities;
 
-namespace Chat.Menus;
+namespace Chat.Menus.PrivateMessagesMenus;
 
 public class PrivateMessagesMenu : Menu
 {

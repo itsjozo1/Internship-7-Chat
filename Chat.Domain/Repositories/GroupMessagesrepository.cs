@@ -37,4 +37,15 @@ public class GroupMessagesrepository : Base
             .OrderBy(message => message.SentTime)
             .ToList();
     }
+    public void DeleteGroupMessagesByUserId(int userId)
+    {
+        var messagesToDelete = DbContext.GroupMessages.Where(gm => gm.UserId == userId).ToList();
+
+        foreach (var message in messagesToDelete)
+        {
+            DbContext.GroupMessages.Remove(message);
+        }
+
+        DbContext.SaveChanges();
+    }
 }

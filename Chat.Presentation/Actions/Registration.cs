@@ -21,10 +21,10 @@ public class Registration
         string captcha = GenerateCaptcha();
         ValidateCaptcha(captcha);
         
-        if (users.Add(new User(email, password)) == ResponseResultType.Success)
+        if (users.Add(new User(email, password, false)) == ResponseResultType.Success)
         {
             Console.WriteLine("Uspješno ste registrirani.");
-            return new User(email, password);
+            return new User(email, password, false);
         }
 
         return null;

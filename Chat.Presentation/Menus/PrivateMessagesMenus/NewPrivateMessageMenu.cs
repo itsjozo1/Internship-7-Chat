@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 using Chat.Actions;
 using Chat.Data.Entities;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
 
-namespace Chat.Menus;
+namespace Chat.Menus.PrivateMessagesMenus;
 
 public class NewPrivateMessageMenu : Menu
 {

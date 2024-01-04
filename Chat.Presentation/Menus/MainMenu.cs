@@ -1,5 +1,8 @@
 using Chat.Actions;
 using Chat.Data.Entities;
+using Chat.Menus.GroupMenus;
+using Chat.Menus.PrivateMessagesMenus;
+using Chat.Menus.UserManagmentMenus;
 
 namespace Chat.Menus;
 
@@ -19,11 +22,21 @@ public class MainMenu : Menu
             
             if (user.IsAdmin)
             {   
-                optionsList.Add("User managment", null);
+                optionsList.Add("User managment", () => UserManagmentMenu.Create(user));
             }
-            optionsList.Add("Odjava", () => { continueLoop = false;});
+            optionsList.Add("Odjava", () => { continueLoop = Logout();});
             DisplayMenus(optionsList);
         }
     }
-    
+
+    static bool Logout()
+    {
+        Console.WriteLine("Želite li se odjaviti (da/ne): ");
+        if (Confirm())
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

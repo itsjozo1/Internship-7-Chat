@@ -64,4 +64,13 @@ public class PrivateMessageRepository : Base
 
         return messages;
     }
+    public void DeletePrivateMessagesByUserId(int userId)
+    {
+        var messagesToDelete = DbContext.PrivateMessages
+            .Where(pm => pm.SentUserId == userId || pm.RecievedUserId == userId)
+            .ToList();
+
+        DbContext.PrivateMessages.RemoveRange(messagesToDelete);
+        DbContext.SaveChanges();
+    }
 }
