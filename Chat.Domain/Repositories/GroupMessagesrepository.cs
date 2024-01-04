@@ -30,8 +30,11 @@ public class GroupMessagesrepository : Base
 
     public List<GroupMessage> GetAll() => DbContext.GroupMessages.ToList();
     
-    public List<GroupMessage> GetAllSortedBySentTime()
+    public List<GroupMessage> GetAllSortedBySentTime(int groupId)
     {
-        return DbContext.GroupMessages.OrderBy(message => message.SentTime).ToList();
+        return DbContext.GroupMessages
+            .Where(message => message.GroupId == groupId)
+            .OrderBy(message => message.SentTime)
+            .ToList();
     }
 }

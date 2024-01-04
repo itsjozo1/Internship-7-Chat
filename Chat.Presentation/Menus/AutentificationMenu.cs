@@ -4,13 +4,18 @@ using Chat.Actions;
 using Chat.Data.Entities;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
+using Chat.Helper;
 
 namespace Chat.Menus;
 
 public class AutentificationMenu : Menu
 {
     public  static void Create()
+    
     {
+        
+        var user1 = RepositoryFactory.Create<UserRepository>(ConfigHelper.GetConfig()).GetById(1);
+        MainMenu.Create(user1); 
         bool continueLoop = true;
         while (continueLoop)
         {
@@ -23,7 +28,7 @@ public class AutentificationMenu : Menu
             };
             DisplayMenus(optionsList);
             if (continueLoop == false) return;
-            MainMenu.Create(user); 
+
         }
     }
 
