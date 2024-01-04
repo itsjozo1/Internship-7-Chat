@@ -3,7 +3,6 @@ using Chat.Domain;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
-using Chat.Menus;
 
 namespace Chat.Actions;
 
@@ -13,7 +12,13 @@ public class AddGroup
     {
         Console.Clear();
         Console.WriteLine("STVARANJE NOVE GRUPE: \nUnesite ime grupe: ");
-        var name = Console.ReadLine();
+        string name = "";
+        while (name == "")
+        {
+                Console.Clear();
+                Console.WriteLine("Unesite ime grupe: ");
+                name = Console.ReadLine();
+        }
         Console.WriteLine("Potvrdite stvaranje grupe " + name + "(da/ne):");
         if (IFunctionHelper.Confirm())
         {

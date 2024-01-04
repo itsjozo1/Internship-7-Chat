@@ -1,4 +1,4 @@
-using System;
+
 using Chat.Data.Entities;
 using Chat.Domain;
 using Chat.Domain.Factories;
@@ -44,11 +44,10 @@ public class ChatAction
 
     static void PrintChat(User user, List<GroupMessage> messages)
     {
-        var userRepository = RepositoryFactory.Create<UserRepository>(ConfigHelper.GetConfig());
 
         foreach (var gm in messages)
         {
-            var userName = userRepository.TrimUsernameBeforeAtSign(gm.UserId);
+            var userName = user.TrimUserName();
             var time = gm.SentTime.ToString("dd/MM/yyyy hh:mm:ss");
 
             if (user.UserId == gm.UserId)

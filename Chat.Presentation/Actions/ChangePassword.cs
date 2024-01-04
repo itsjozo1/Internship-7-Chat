@@ -2,7 +2,6 @@ using Chat.Data.Entities;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
-using System;
 using Chat.Domain;
 
 namespace Chat.Actions
@@ -40,12 +39,12 @@ namespace Chat.Actions
             do
             {
                 Console.WriteLine("Unesite novu lozinku (minimalno 6 znakova): ");
-                password = Console.ReadLine();
-                if (string.IsNullOrEmpty(password) || password.Length < 6)
+                password = IFunctionHelper.GetMaskedPassword();
+                if (password.Length < 6)
                 {
                     Console.WriteLine("Nova lozinka mora sadržavati najmanje 6 znakova.");
                 }
-            } while (string.IsNullOrEmpty(password) || password.Length < 6);
+            } while (password.Length < 6);
 
             return password;
         }
@@ -56,7 +55,7 @@ namespace Chat.Actions
             do
             {
                 Console.WriteLine("Potvrdite lozinku: ");
-                reenteredPassword = Console.ReadLine();
+                reenteredPassword = IFunctionHelper.GetMaskedPassword();
 
                 if (reenteredPassword != newPassword)
                 {

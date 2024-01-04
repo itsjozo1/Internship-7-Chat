@@ -14,21 +14,6 @@ public class GroupMessagesrepository : Base
 
         return SaveChanges();
     }
-
-    public ResponseResultType Delete(int id)
-    {
-        var gMessageToDelete = DbContext.GroupMessages.Find(id);
-        if (gMessageToDelete is null)
-        {
-            return ResponseResultType.NotFound;
-        }
-
-        DbContext.GroupMessages.Remove(gMessageToDelete);
-
-        return SaveChanges();
-    }
-
-    public List<GroupMessage> GetAll() => DbContext.GroupMessages.ToList();
     
     public List<GroupMessage> GetAllSortedBySentTime(int groupId)
     {

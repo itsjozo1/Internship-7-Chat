@@ -2,8 +2,6 @@ using Chat.Data.Entities;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
-using System;
-using System.Collections.Generic;
 using Chat.Domain;
 
 namespace Chat.Actions
@@ -48,7 +46,7 @@ namespace Chat.Actions
 
             foreach (var pm in messages)
             {
-                var sender = userRepository.TrimUsernameBeforeAtSign(pm.SentUserId);
+                var sender = user.TrimUserName();
                 var time = pm.SentTime.ToString("dd/MM/yyyy hh:mm:ss");
                 if (user.UserId == pm.SentUserId)
                 {

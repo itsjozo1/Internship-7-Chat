@@ -14,21 +14,6 @@ public class PrivateMessageRepository : Base
 
         return SaveChanges();
     }
-
-    public ResponseResultType Delete(int id)
-    {
-        var pMessageToDelete = DbContext.PrivateMessages.Find(id);
-        if (pMessageToDelete is null)
-        {
-            return ResponseResultType.NotFound;
-        }
-
-        DbContext.PrivateMessages.Remove(pMessageToDelete);
-
-        return SaveChanges();
-    }
-
-    public ICollection<PrivateMessage> GetAll() => DbContext.PrivateMessages.ToList();
     
     public List<User> GetAllUsersPrivateChats(int userId)
     {

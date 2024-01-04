@@ -1,9 +1,7 @@
 using Chat.Data.Entities;
 using Chat.Domain.Repositories;
 using Chat.Helper;
-using System.Linq;
 using Chat.Domain.Factories;
-using Chat.Menus;
 
 namespace Chat.Actions
 {
@@ -16,8 +14,9 @@ namespace Chat.Actions
             PrivateMessageRepository privateMessageRepository = RepositoryFactory.Create<PrivateMessageRepository>(ConfigHelper.GetConfig());
             GroupUserRepository groupUserRepository = RepositoryFactory.Create<GroupUserRepository>(ConfigHelper.GetConfig());
 
-            var userName = userRepository.TrimUsernameBeforeAtSign(user.UserId);
+            var userName = user.TrimUserName();
             Console.Clear();
+            
             Console.WriteLine($"Želite li izbrisati korisnika {userName}? (da/ne)");
             if (IFunctionHelper.Confirm())
             {

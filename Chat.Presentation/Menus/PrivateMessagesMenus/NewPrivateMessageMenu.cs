@@ -30,8 +30,7 @@ public class NewPrivateMessageMenu : Menu
         
         foreach (var u in usersWithoutChat)
         {
-            var userName = RepositoryFactory.Create<UserRepository>(ConfigHelper.GetConfig())
-                .TrimUsernameBeforeAtSign(u.UserId);
+            var userName = u.TrimUserName();
             enterChat.Add(userName, () => PrivateChatAction.Create(user, u));
         }
         enterChat.Add("Povratak", () => {});

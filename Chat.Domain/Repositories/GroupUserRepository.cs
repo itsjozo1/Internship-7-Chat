@@ -15,19 +15,7 @@ public class GroupUserRepository : Base
 
         return SaveChanges();
     }
-
-    public ResponseResultType Delete(int id)
-    {
-        var groupUserToDelete = DbContext.GroupUsers.Find(id);
-        if (groupUserToDelete is null)
-        {
-            return ResponseResultType.NotFound;
-        }
-
-        DbContext.GroupUsers.Remove(groupUserToDelete);
-
-        return SaveChanges();
-    }
+    
     public List<GroupUser> GetAllGroupUsersByUserId(int userId)
     {
         return DbContext.GroupUsers
