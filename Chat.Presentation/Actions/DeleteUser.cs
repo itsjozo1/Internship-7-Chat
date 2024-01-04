@@ -19,7 +19,7 @@ namespace Chat.Actions
             var userName = userRepository.TrimUsernameBeforeAtSign(user.UserId);
             Console.Clear();
             Console.WriteLine($"Želite li izbrisati korisnika {userName}? (da/ne)");
-            if (Menu.Confirm())
+            if (IFunctionHelper.Confirm())
             {
                 groupMessagesrepository.DeleteGroupMessagesByUserId(user.UserId);
                 privateMessageRepository.DeletePrivateMessagesByUserId(user.UserId);

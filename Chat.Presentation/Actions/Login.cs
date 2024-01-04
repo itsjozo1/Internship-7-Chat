@@ -2,10 +2,11 @@ using Chat.Data.Entities;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
+using Chat.Menus;
 
 namespace Chat.Actions;
 
-public class Login
+public class Login : Menu
 {
     private const int MaxAttempts = 3;
     private const int CooldownTimeSeconds = 30;
@@ -36,7 +37,7 @@ public class Login
             Console.WriteLine("Unesite svoj email: ");
             var email = Console.ReadLine();
             Console.WriteLine("Unesite lozinku: ");
-            var password = Console.ReadLine();
+            var password = IFunctionHelper.GetMaskedPassword();
 
             var user = users.GetByEmail(email);
 

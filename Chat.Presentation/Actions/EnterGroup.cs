@@ -12,7 +12,7 @@ public class EnterGroup
     public static void Create(User user, Group group)
     {
         Console.WriteLine("Želite li ući u grupu (da/ne)" + group.Name);
-        if (Menu.Confirm())
+        if (IFunctionHelper.Confirm())
         {
             ResponseResultType groupUserRepository = RepositoryFactory
                 .Create<GroupUserRepository>(ConfigHelper.GetConfig())

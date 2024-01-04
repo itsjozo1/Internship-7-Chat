@@ -18,7 +18,7 @@ public class ChangeEmail
         Console.Clear();
         Console.WriteLine($"Želite li proijeniti email korisnika iz {user.Email}\n" +
                           $"u {newEmail} (da/ne): ");
-        if (Menu.Confirm())
+        if (IFunctionHelper.Confirm())
         {
             var updateUser = userRepository.Update(new User(newEmail, user.Password, user.IsAdmin), user.UserId);
             if (updateUser != ResponseResultType.Success)

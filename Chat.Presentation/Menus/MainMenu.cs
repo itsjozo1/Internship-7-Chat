@@ -1,12 +1,13 @@
 using Chat.Actions;
 using Chat.Data.Entities;
+using Chat.Helper;
 using Chat.Menus.GroupMenus;
 using Chat.Menus.PrivateMessagesMenus;
 using Chat.Menus.UserManagmentMenus;
 
 namespace Chat.Menus;
 
-public class MainMenu : Menu
+public class MainMenu : Menu, IFunctionHelper
 {
     public static void Create(User user)
     {
@@ -17,7 +18,7 @@ public class MainMenu : Menu
             {
                 { "Grupni kanali", () => GroupMenu.Create(user) },
                 { "Privatne poruke", () => PrivateMessagesMenu.Create(user) },
-                { "Postavke profila", () => GroupMenu.Create(user) }
+                { "Postavke profila", () => OptionsMenu.Create(user) }
             };
             
             if (user.IsAdmin)
@@ -32,11 +33,10 @@ public class MainMenu : Menu
     static bool Logout()
     {
         Console.WriteLine("Želite li se odjaviti (da/ne): ");
-        if (Confirm())
+        if (IFunctionHelper.Confirm())
         {
             return false;
         }
-
         return true;
     }
 }

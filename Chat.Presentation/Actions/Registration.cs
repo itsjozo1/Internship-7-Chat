@@ -5,10 +5,11 @@ using Chat.Domain;
 using Chat.Domain.Factories;
 using Chat.Domain.Repositories;
 using Chat.Helper;
+using Chat.Menus;
 
 namespace Chat.Actions;
 
-public class Registration
+public class Registration : Menu
 {
     public static User? Create()
     {
@@ -16,7 +17,7 @@ public class Registration
         
         string email = GetUserEmail(users);
         string password = GetPassword();
-        ConfirmPassword(users, password);
+        ConfirmPassword(password);
 
         string captcha = GenerateCaptcha();
         ValidateCaptcha(captcha);
@@ -61,20 +62,24 @@ public class Registration
         string password;
         do
         {
-            Console.WriteLine("Unesite lozinku: ");
-            password = Console.ReadLine();
-        } while (string.IsNullOrEmpty(password));
+            Console.WriteLine("Unesite lozinku (minimalno 6 znakova): ");
+            password = IFunctionHelper.GetMaskedPassword();
+            if (string.IsNullOrEmpty(password) || password.Length < 6)
+            {
+                Console.WriteLine("Lozinka mora sadržavati najmanje 6 znakova.");
+            }
+        } while (string.IsNullOrEmpty(password) || password.Length < 6);
 
         return password;
     }
 
-    static void ConfirmPassword(UserRepository users, string password)
+    static void ConfirmPassword(string password)
     {
         string reenteredPassword;
         do
         {
             Console.WriteLine("Potvrdite lozinku: ");
-            reenteredPassword = Console.ReadLine();
+            reenteredPassword = IFunctionHelper.GetMaskedPassword();
             
             if (reenteredPassword != password)
             {

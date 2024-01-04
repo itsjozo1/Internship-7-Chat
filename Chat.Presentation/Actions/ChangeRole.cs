@@ -20,7 +20,7 @@ namespace Chat.Actions
             Console.WriteLine($"Role korisnika {userName} je {(userRole ? "Admin" : "običan korisnik")}\n" +
                               $"Želite li promijeniti u {(userRole ? "običan korisnik" : "Admin")} (da/ne):");
 
-            if (Menu.Confirm())
+            if (IFunctionHelper.Confirm())
             {
                 var newRole = !userRole;
                 var updatedUser = new User(user.Email, user.Password, newRole);

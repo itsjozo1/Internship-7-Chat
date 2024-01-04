@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Chat.Menus;
 
 public class Menu
 {
-    protected static void DisplayMenus(Dictionary<string, Action> optionsList)
+    protected static void DisplayMenus(Dictionary<string, Action?> optionsList)
     {
         ConsoleKeyInfo key;
         int selectedOption = 0;
@@ -52,21 +53,5 @@ public class Menu
             }
         } while (key.Key != ConsoleKey.Enter);
             
-    }
-    public static bool Confirm()
-    {
-        var choice = Console.ReadLine().ToLower().Trim();
-        while (!choice.Equals("da") && !choice.Equals("ne"))
-        {
-            Console.WriteLine("Unesite da ili ne: ");
-            choice = Console.ReadLine().ToLower().Trim();
-        }
-
-        if (choice.Equals("da"))
-        {
-            return true;
-        }
-
-        return false;
     }
 }

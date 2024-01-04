@@ -1,8 +1,6 @@
 using Bogus;
 using Chat.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Chat.Data
 {

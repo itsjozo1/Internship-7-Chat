@@ -15,7 +15,7 @@ public class AddGroup
         Console.WriteLine("STVARANJE NOVE GRUPE: \nUnesite ime grupe: ");
         var name = Console.ReadLine();
         Console.WriteLine("Potvrdite stvaranje grupe " + name + "(da/ne):");
-        if (Menu.Confirm())
+        if (IFunctionHelper.Confirm())
         {
             ResponseResultType addGroup = RepositoryFactory.Create<GroupRepository>(ConfigHelper
                 .GetConfig()).Add(new Group(name));
