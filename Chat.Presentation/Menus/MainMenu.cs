@@ -13,7 +13,7 @@ public class MainMenu : Menu
             Dictionary<string, Action?> optionsList = new Dictionary<string, Action?>()
             {
                 { "Grupni kanali", () => GroupMenu.Create(user) },
-                { "Privatne poruke", () => GroupMenu.Create(user) },
+                { "Privatne poruke", () => PrivateMessagesMenu.Create(user) },
                 { "Postavke profila", () => GroupMenu.Create(user) }
             };
             

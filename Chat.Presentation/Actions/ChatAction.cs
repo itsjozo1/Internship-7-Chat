@@ -49,7 +49,7 @@ public class ChatAction
         foreach (var gm in messages)
         {
             var userName = userRepository.TrimUsernameBeforeAtSign(gm.UserId);
-            var time = gm.SentTime.ToString("hh:mm:ss");
+            var time = gm.SentTime.ToString("dd/MM/yyyy hh:mm:ss");
 
             if (user.UserId == gm.UserId)
             {
